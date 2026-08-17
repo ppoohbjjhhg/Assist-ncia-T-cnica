@@ -31,7 +31,7 @@ const KB = {
 };
 
 // Perguntas / respostas por intenção. Cada item tem palavras-chave
-// e uma resposta. A primeira intenção com match "vence".
+// e uma resposta. A primeira intenção com match "vence". henrique
 const INTENTS = [
   {
     id:"ar-condicionado",
