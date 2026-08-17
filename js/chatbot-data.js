@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
  * Base de conhecimento do assistente NovaTech.
-=======
- * Base de conhecimento do assistente Eaeficaz.
->>>>>>> 8ed2d3ed1fc2e7f672866e5e4ccb4608e0fdc2e5
  * -----------------------------------------------------------
  * Isto é um assistente baseado em regras (keyword matching),
  * 100% client-side — não precisa de servidor, chave de API
@@ -16,23 +12,14 @@
  * EDITE OS ARRAYS ABAIXO com as informações reais do cliente.
  */
 
-<<<<<<< HEAD
 const WHATSAPP_NUMBER = "5581991546997";
-=======
-const WHATSAPP_NUMBER = "5581991098838";
->>>>>>> 8ed2d3ed1fc2e7f672866e5e4ccb4608e0fdc2e5
 const whatsappLink = (msg) => `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
 
 const KB = {
   bairros: [
-<<<<<<< HEAD
     "nova caruaru","universitario","universitário","salgado","santa rosa","indianopolis","indianópolis",
     "mauricio de nassau","maurício de nassau","petropolis","petrópolis","cidade jardim","xique xique","xique-xique",
     "vassoural","agamenon","cidade alta","riachao","riachão","sao francisco","são francisco","panorama","caruaru"
-=======
-    "boa viagem","pina","imbiribeira","madalena","graças","gracas","espinheiro",
-    "casa forte","tamarineira","cordeiro","derby","recife"
->>>>>>> 8ed2d3ed1fc2e7f672866e5e4ccb4608e0fdc2e5
   ],
   marcas: ["brastemp","electrolux","consul","lg","samsung","panasonic"],
   servicos: [
@@ -53,7 +40,6 @@ const INTENTS = [
     cta:"Perguntar sobre ar-condicionado no WhatsApp"
   },
   {
-<<<<<<< HEAD
     id:"endereco",
     keywords:["endereco","endereço","onde fica","localizacao","localização","loja","fica onde"],
     reply:"Nossa base fica na Rua Lima e Silva, 57 — bairro Petrópolis, Caruaru/PE. O atendimento em si é feito na casa ou comércio do cliente, em qualquer bairro atendido.",
@@ -69,16 +55,6 @@ const INTENTS = [
       "vassoural","agamenon","cidade alta","riachao","riachão","sao francisco","são francisco","panorama"
     ],
     reply:"Atendemos toda Caruaru: Nova Caruaru, Universitário, Salgado, Santa Rosa, Indianópolis, Maurício de Nassau, Petrópolis, Cidade Jardim, Xique Xique, Vassoural, Agamenon, Cidade Alta, Riachão, São Francisco e Panorama. Não viu seu bairro? A equipe confirma na hora pelo WhatsApp.",
-=======
-    id:"bairro",
-    keywords:[
-      "bairro","atende minha regiao","atende minha região","atendem ai","voces vem","vocês vêm","atende onde eu moro",
-      "voces atendem","vocês atendem","atendem em","recife todo","toda recife",
-      "boa viagem","pina","imbiribeira","madalena","gracas","graças","espinheiro",
-      "casa forte","tamarineira","cordeiro","derby"
-    ],
-    reply:"Atendemos toda Recife, com prioridade de deslocamento em Boa Viagem, Pina, Imbiribeira, Madalena, Graças, Espinheiro, Casa Forte, Tamarineira, Cordeiro e Derby. Não viu seu bairro? A equipe confirma na hora pelo WhatsApp.",
->>>>>>> 8ed2d3ed1fc2e7f672866e5e4ccb4608e0fdc2e5
     cta:"Confirmar meu bairro no WhatsApp"
   },
   {
@@ -102,11 +78,7 @@ const INTENTS = [
   {
     id:"prazo",
     keywords:["mesmo dia","quando","prazo","demora","rapido","rápido","hoje"],
-<<<<<<< HEAD
     reply:"Na maioria dos casos o atendimento é feito no mesmo dia, dependendo da agenda e da região. Bairros mais próximos da nossa base no Petrópolis costumam ter prioridade de deslocamento.",
-=======
-    reply:"Na maioria dos casos o atendimento é feito no mesmo dia, dependendo da agenda e da região. Bairros da Zona Sul e Zona Norte costumam ter prioridade de deslocamento.",
->>>>>>> 8ed2d3ed1fc2e7f672866e5e4ccb4608e0fdc2e5
     cta:"Verificar disponibilidade hoje"
   },
   {
@@ -136,11 +108,7 @@ const INTENTS = [
   {
     id:"domicilio",
     keywords:["domicilio","domicílio","em casa","vem aqui","vao ate","vão até","loja"],
-<<<<<<< HEAD
     reply:"Atendemos em domicílio e em estabelecimentos comerciais em toda Caruaru, incluindo expositoras e frigobares comerciais.",
-=======
-    reply:"Atendemos em domicílio e em estabelecimentos comerciais em toda Recife, incluindo expositoras e frigobares comerciais.",
->>>>>>> 8ed2d3ed1fc2e7f672866e5e4ccb4608e0fdc2e5
     cta:"Agendar visita técnica"
   }
 ];
