@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100%" height="100%">
+  <!-- Fundo Azul Petróleo Escuro -->
+  <rect width="100" height="100" rx="20" fill="#071A33" />
+  
+  <!-- Borda Arredondada em Azul Celeste -->
+  <rect x="10" y="10" width="80" height="80" rx="18" fill="none" stroke="#79C6FF" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" />
+  
+  <!-- Linha de Sinal/Batimento em Azul Celeste -->
+  <path d="M 28 50 L 40 50 L 45 28 L 55 72 L 60 50 L 72 50" fill="none" stroke="#79C6FF" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" />
+</svg>
