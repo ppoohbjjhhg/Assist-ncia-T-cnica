@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ficha de Atendimento — NovaTech Assistência Técnica</title>
+<link rel="icon" type="image/svg+xml" href="img/gemini-svg.svg">
+<style>
+  :root{
+    --navy-dark:#071A33;
+    --navy:#0F2D57;
+    --blue:#2D7BEF;
+    --blue-light:#79C6FF;
+    --white:#FFFFFF;
+    --off-white:#F3F7FF;
+    --text-muted:#5A6B85;
+    --error:#E4573D;
+    --radius:16px;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:linear-gradient(180deg,var(--navy-dark) 0%, var(--navy) 55%, #143a6e 100%);
+    min-height:100vh;
+    padding:32px 16px 60px;
+    color:var(--navy-dark);
+  }
+  .wrap{max-width:640px;margin:0 auto;}
+  .brand{
+    display:flex;align-items:center;gap:12px;
+    margin-bottom:22px;
+    opacity:0;
+    animation:fadeDown .6s ease forwards;
+  }
+  .brand-badge{
+    width:44px;height:44px;border-radius:12px;
+    background:linear-gradient(135deg,var(--blue) 0%, var(--blue-light) 100%);
+    display:flex;align-items:center;justify-content:center;
+    font-weight:800;color:var(--white);font-size:20px;
+    box-shadow:0 8px 20px rgba(45,123,239,.35);
+  }
+  .brand-text h1{margin:0;font-size:19px;color:var(--white);letter-spacing:.2px;}
+  .brand-text span{font-size:11px;letter-spacing:2px;color:var(--blue-light);font-weight:600;}
+
+  .intro{
+    color:var(--off-white);
+    margin:0 0 26px;
+    opacity:0;
+    animation:fadeDown .6s ease .08s forwards;
+  }
+  .intro h2{font-size:26px;margin:0 0 8px;color:var(--white);}
+  .intro p{margin:0;color:#c7d6f0;font-size:15px;line-height:1.5;}
+
+  form{
+    background:var(--white);
+    border-radius:var(--radius);
+    padding:28px 24px 30px;
+    box-shadow:0 20px 60px rgba(3,12,28,.35);
+    opacity:0;
+    animation:fadeUp .6s ease .16s forwards;
+  }
+
+  .field{margin-bottom:20px;position:relative;}
+  .field label{
+    display:block;font-size:13px;font-weight:700;color:var(--navy);
+    margin-bottom:6px;letter-spacing:.2px;
+  }
+  .field .hint{font-size:12px;color:var(--text-muted);margin-top:5px;}
+  .field input,.field select,.field textarea{
+    width:100%;padding:12px 14px;border-radius:10px;
+    border:1.5px solid #dfe6f3;font-size:15px;
+    font-family:inherit;color:var(--navy-dark);
+    background:var(--off-white);
+    transition:border-color .18s ease, box-shadow .18s ease;
+  }
+  .field textarea{resize:vertical;min-height:74px;}
+  .field input:focus,.field select:focus,.field textarea:focus{
+    outline:none;border-color:var(--blue);
+    box-shadow:0 0 0 4px rgba(45,123,239,.14);
+    background:var(--white);
+  }
+  .field.invalid input,.field.invalid select,.field.invalid textarea{
+    border-color:var(--error);
+    box-shadow:0 0 0 4px rgba(228,87,61,.1);
+  }
+  .field .err-msg{
+    display:none;color:var(--error);font-size:12px;margin-top:5px;font-weight:600;
+  }
+  .field.invalid .err-msg{display:block;}
+
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  @media (max-width:480px){ .row2{grid-template-columns:1fr;} }
+
+  .section-title{
+    font-size:12px;font-weight:800;letter-spacing:1.5px;color:var(--blue);
+    text-transform:uppercase;margin:26px 0 14px;
+    display:flex;align-items:center;gap:8px;
+  }
+  .section-title::after{content:"";flex:1;height:1px;background:#e7edf8;}
+  .section-title:first-of-type{margin-top:0;}
+
+  button[type="submit"]{
+    width:100%;margin-top:8px;padding:16px;border:none;border-radius:12px;
+    background:linear-gradient(135deg,#25D366 0%, #1EBE59 100%);
+    color:var(--white);font-size:16px;font-weight:700;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;gap:10px;
+    box-shadow:0 12px 26px rgba(37,211,102,.35);
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  button[type="submit"]:hover{transform:translateY(-2px);box-shadow:0 16px 34px rgba(37,211,102,.45);}
+  button[type="submit"]:active{transform:translateY(0);}
+  button[type="submit"] svg{width:20px;height:20px;}
+
+  .note{
+    text-align:center;color:var(--text-muted);font-size:12.5px;margin-top:14px;line-height:1.5;
+  }
+
+  @keyframes fadeDown{from{opacity:0;transform:translateY(-10px);}to{opacity:1;transform:translateY(0);}}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+
+  @media (prefers-reduced-motion: reduce){
+    .brand,.intro,form{animation:none;opacity:1;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="brand">
+    <div class="brand-badge">N</div>
+    <div class="brand-text">
+      <h1>NovaTech</h1>
+      <span>ASSISTÊNCIA TÉCNICA</span>
+    </div>
+  </div>
+
+  <div class="intro">
+    <h2>Ficha de Atendimento</h2>
+    <p>Preencha os dados abaixo. Ao final, sua ficha organizada é enviada direto para o nosso WhatsApp — sem precisar digitar tudo de novo.</p>
+  </div>
+
+  <form id="fichaForm" novalidate>
+
+    <div class="section-title">Seus dados</div>
+
+    <div class="field" data-field="nome">
+      <label for="nome">Nome completo</label>
+      <input type="text" id="nome" name="nome" placeholder="Ex: Maria da Silva">
+      <div class="err-msg">Informe seu nome.</div>
+    </div>
+
+    <div class="field" data-field="endereco">
+      <label for="endereco">Endereço completo</label>
+      <input type="text" id="endereco" name="endereco" placeholder="Rua, número, bairro">
+      <div class="hint">Inclua um ponto de referência, se puder.</div>
+      <div class="err-msg">Informe o endereço para a visita.</div>
+    </div>
+
+    <div class="field" data-field="contato">
+      <label for="contato">Telefone / WhatsApp para retorno</label>
+      <input type="tel" id="contato" name="contato" placeholder="(81) 9XXXX-XXXX">
+      <div class="err-msg">Informe um telefone de contato.</div>
+    </div>
+
+    <div class="section-title">O aparelho</div>
+
+    <div class="row2">
+      <div class="field" data-field="produto">
+        <label for="produto">Produto</label>
+        <select id="produto" name="produto">
+          <option value="">Selecione...</option>
+          <option>Geladeira</option>
+          <option>Freezer</option>
+          <option>Máquina de lavar</option>
+          <option>Lava e seca</option>
+          <option>Lava-louças</option>
+          <option>Micro-ondas</option>
+          <option>Outro</option>
+        </select>
+        <div class="err-msg">Selecione o produto.</div>
+      </div>
+      <div class="field" data-field="marca">
+        <label for="marca">Marca / modelo</label>
+        <input type="text" id="marca" name="marca" placeholder="Ex: Brastemp BRM50">
+        <div class="err-msg">Informe a marca, se souber.</div>
+      </div>
+    </div>
+
+    <div class="section-title">O problema</div>
+
+    <div class="field" data-field="defeito">
+      <label for="defeito">Descrição do defeito</label>
+      <textarea id="defeito" name="defeito" placeholder="O que está acontecendo? Desde quando?"></textarea>
+      <div class="err-msg">Descreva o defeito para agilizar o diagnóstico.</div>
+    </div>
+
+    <div class="field" data-field="adicional">
+      <label for="adicional">Informações adicionais <span style="font-weight:400;color:var(--text-muted);">(opcional)</span></label>
+      <textarea id="adicional" name="adicional" placeholder="Já foi mexido por outro técnico? Faz barulho, cheiro ou luz diferente? Aconteceu após queda de energia?"></textarea>
+    </div>
+
+    <div class="field" data-field="horario">
+      <label for="horario">Melhor horário para a visita</label>
+      <input type="text" id="horario" name="horario" placeholder="Ex: Amanhã à tarde, ou Sábado de manhã">
+      <div class="err-msg">Informe um horário de preferência.</div>
+    </div>
+
+    <button type="submit">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.5 3.5A11.6 11.6 0 0 0 12 0C5.6 0 .4 5.2.4 11.6c0 2 .6 4 1.6 5.7L0 24l6.9-1.8a11.6 11.6 0 0 0 5.1 1.2h.1c6.4 0 11.6-5.2 11.6-11.6 0-3.1-1.2-6-3.2-8.3zM12 21.3h-.1a9.6 9.6 0 0 1-4.9-1.3l-.4-.2-3.6 1 1-3.5-.2-.4a9.6 9.6 0 0 1-1.5-5.2C2.3 6.3 6.6 2 12 2c2.6 0 5 1 6.8 2.8A9.6 9.6 0 0 1 21.6 11.6c0 5.4-4.3 9.7-9.6 9.7zm5.3-7.3c-.3-.1-1.7-.9-2-1-.3-.1-.5-.1-.7.1s-.8 1-.9 1.2-.3.2-.6.1a7.9 7.9 0 0 1-2.3-1.4 8.6 8.6 0 0 1-1.6-2c-.2-.3 0-.5.1-.6l.4-.5.3-.4c.1-.1.1-.3 0-.4-.1-.1-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4s-1 1-1 2.4 1 2.8 1.2 3c.1.2 2 3 4.8 4.3.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.7-.7 1.9-1.4.2-.7.2-1.3.2-1.4-.1-.2-.3-.2-.6-.4z"/></svg>
+      Enviar ficha pelo WhatsApp
+    </button>
+
+    <p class="note">Ao enviar, o WhatsApp abre com sua ficha já preenchida — é só conferir e apertar enviar.</p>
+  </form>
+</div>
+
+<script>
+  // >>> Configure aqui o número de WhatsApp da NovaTech (formato: 55 + DDD + número, só dígitos)
+  const WHATSAPP_NUMBER = "5581991546997";
+
+  const form = document.getElementById('fichaForm');
+  const fields = ['nome','endereco','contato','produto','marca','defeito','horario'];
+  // 'marca' e 'adicional' são tratados como opcionais na validação (mensagem some se preenchido)
+  const optional = ['marca','adicional'];
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    let valid = true;
+
+    fields.forEach(name => {
+      const el = form.elements[name];
+      const wrapper = form.querySelector(`[data-field="${name}"]`);
+      const value = el.value.trim();
+      const isOptional = optional.includes(name);
+      if(!value && !isOptional){
+        wrapper.classList.add('invalid');
+        valid = false;
+      } else {
+        wrapper.classList.remove('invalid');
+      }
+    });
+
+    if(!valid){
+      form.querySelector('.invalid input, .invalid select, .invalid textarea')?.focus();
+      return;
+    }
+
+    const data = Object.fromEntries(new FormData(form).entries());
+
+    const linhas = [
+      "📋 *Ficha de Atendimento — NovaTech*",
+      "",
+      `*Nome:* ${data.nome}`,
+      `*Endereço:* ${data.endereco}`,
+      `*Contato:* ${data.contato}`,
+      "",
+      `*Produto:* ${data.produto}`,
+      data.marca ? `*Marca/modelo:* ${data.marca}` : null,
+      "",
+      `*Defeito:* ${data.defeito}`,
+      data.adicional ? `*Informações adicionais:* ${data.adicional}` : null,
+      "",
+      `*Melhor horário:* ${data.horario}`
+    ].filter(Boolean).join("\n");
+
+    const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(linhas)}`;
+    window.location.href = url;
+  });
+</script>
+</body>
+</html>

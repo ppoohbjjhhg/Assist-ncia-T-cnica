@@ -176,3 +176,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
   cards.forEach(card => observer.observe(card));
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+  const ctaBox = document.querySelector('.ficha-cta-inner');
+  if (ctaBox) {
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          obs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.2 });
+    obs.observe(ctaBox);
+  }
+});
