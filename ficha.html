@@ -39,6 +39,11 @@
     display:flex;align-items:center;justify-content:center;
     font-weight:800;color:var(--white);font-size:20px;
     box-shadow:0 8px 20px rgba(45,123,239,.35);
+    overflow:hidden;
+    padding:7px;
+  }
+  .brand-badge img{
+    width:100%;height:100%;object-fit:contain;display:block;
   }
   .brand-text h1{margin:0;font-size:19px;color:var(--white);letter-spacing:.2px;}
   .brand-text span{font-size:11px;letter-spacing:2px;color:var(--blue-light);font-weight:600;}
@@ -128,7 +133,9 @@
 <div class="wrap">
 
   <div class="brand">
-    <div class="brand-badge">N</div>
+    <div class="brand-badge">
+      <img src="img/gemini-svg.svg" alt="Logo NovaTech">
+    </div>
     <div class="brand-text">
       <h1>NovaTech</h1>
       <span>ASSISTÊNCIA TÉCNICA</span>
@@ -203,7 +210,7 @@
     <div class="field" data-field="horario">
       <label for="horario">Melhor horário para a visita</label>
       <input type="text" id="horario" name="horario" placeholder="Ex: Amanhã à tarde, ou Sábado de manhã">
-      <div class="err-msg">Informe um horário de preferência.</div>
+      <div class="err-msg">Informe um horário da sua preferência.</div>
     </div>
 
     <button type="submit">
