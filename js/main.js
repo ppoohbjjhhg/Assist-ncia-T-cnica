@@ -1,9 +1,35 @@
 (function () {
   "use strict";
 
+  window.dataLayer = window.dataLayer || [];
+
   /* Ano no rodapé */
   var yearEl = document.getElementById("year");
   if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+  /* ---------- Rastreamento de conversão (WhatsApp / telefone) ----------
+     Cada clique em link de WhatsApp ou telefone dispara um evento pro
+     dataLayer, que o GTM usa pra alimentar a conversão no Google Ads.
+     Sem isso o Ads não sabe distinguir clique de lead de verdade. */
+  document.querySelectorAll('[data-track="whatsapp_click"]').forEach(function (el) {
+    el.addEventListener("click", function () {
+      window.dataLayer.push({
+        event: "whatsapp_click",
+        link_url: el.href,
+        link_location: el.closest("section, header, footer, div.sticky-cta")
+          ? (el.closest("[id]") ? el.closest("[id]").id : "page")
+          : "page",
+      });
+    });
+  });
+  document.querySelectorAll('[data-track="phone_click"]').forEach(function (el) {
+    el.addEventListener("click", function () {
+      window.dataLayer.push({
+        event: "phone_click",
+        link_url: el.href,
+      });
+    });
+  });
 
   /* ---------- Menu mobile ---------- */
   var navToggle = document.getElementById("navToggle");
@@ -47,7 +73,8 @@
   /* ---------- Painel de diagnóstico: alterna FALHA / OK ---------- */
   var diagLed = document.getElementById("diagLed");
   var diagWord = document.getElementById("diagWord");
-  if (diagLed && diagWord && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+  var reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (diagLed && diagWord && !reducedMotion) {
     var isOk = false;
     setInterval(function () {
       isOk = !isOk;
@@ -55,6 +82,52 @@
       diagWord.classList.toggle("is-ok", isOk);
       diagWord.textContent = isOk ? "RESOLVIDO" : "FALHA";
     }, 3200);
+  }
+
+  /* ---------- Contador animado da faixa de estatísticas ---------- */
+  var statEls = document.querySelectorAll(".stat__num[data-count]");
+  if (statEls.length) {
+    var animateCount = function (el) {
+      var target = parseInt(el.getAttribute("data-count"), 10) || 0;
+      var suffix = el.getAttribute("data-suffix") || "";
+      if (reducedMotion) {
+        el.textContent = target + suffix;
+        return;
+      }
+      var duration = 1400;
+      var start = null;
+      function step(ts) {
+        if (start === null) start = ts;
+        var progress = Math.min((ts - start) / duration, 1);
+        var eased = 1 - Math.pow(1 - progress, 3);
+        el.textContent = Math.floor(eased * target) + suffix;
+        if (progress < 1) {
+          requestAnimationFrame(step);
+        } else {
+          el.textContent = target + suffix;
+        }
+      }
+      requestAnimationFrame(step);
+    };
+
+    if ("IntersectionObserver" in window) {
+      var statIo = new IntersectionObserver(
+        function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              animateCount(entry.target);
+              statIo.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.4 }
+      );
+      statEls.forEach(function (el) {
+        statIo.observe(el);
+      });
+    } else {
+      statEls.forEach(animateCount);
+    }
   }
 
   /* ---------- Accordion FAQ ---------- */
@@ -128,9 +201,9 @@
 
   var respostas = [
     {
-      gatilhos: ["bairro", "endereço", "endereco", "atende aqui", "regi"],
+      gatilhos: ["bairro", "endereço", "endereco", "atende aqui", "regi", "cidade"],
       resposta:
-        "Atendemos diversos bairros de Caruaru, com prioridade para Petrópolis, Cidade Jardim e Universitário. Me diz o nome do seu bairro que eu confirmo, ou pergunte direto no WhatsApp.",
+        "Atendemos Recife, Olinda, Paulista, Jaboatão dos Guararapes, Camaragibe e São Lourenço da Mata. Em Recife, prioridade para Boa Viagem, Pina, Imbiribeira, Espinheiro e Casa Forte. Me diz sua cidade ou bairro que eu confirmo, ou pergunte direto no WhatsApp.",
     },
     {
       gatilhos: ["marca", "brastemp", "consul", "electrolux", "lg", "samsung", "panasonic"],
@@ -148,12 +221,16 @@
     },
     {
       gatilhos: ["garantia"],
-      resposta: "Sim! Todo serviço sai com garantia por escrito, cobrindo peça e mão de obra.",
+      resposta: "Sim! Todo serviço sai com 90 dias de garantia por escrito, cobrindo peça e mão de obra.",
     },
     {
       gatilhos: ["mesmo dia", "hoje", "urgente", "rápido", "rapido"],
       resposta:
-        "Na maioria dos casos conseguimos atender no mesmo dia, dependendo da agenda e da região. Bairros perto da nossa base no Petrópolis costumam ter prioridade.",
+        "Na maioria dos casos conseguimos atender no mesmo dia, dependendo da agenda e da região. Bairros perto da orla costumam ter prioridade.",
+    },
+    {
+      gatilhos: ["quanto tempo", "experi", "confia", "quem", "quantos"],
+      resposta: "Já são mais de 3 mil serviços realizados em 5+ anos de mercado — trazendo esse padrão pra Recife agora.",
     },
   ];
 
@@ -170,10 +247,18 @@
     if (!body) return;
     var div = document.createElement("div");
     div.className = "msg msg--bot msg--cta";
-    div.innerHTML =
-      'Para fechar o atendimento, fale com nosso time: <a class="btn btn--wpp btn--sm" target="_blank" rel="noopener" href="' +
-      whatsappLink +
-      '">Abrir WhatsApp</a>';
+    var link = document.createElement("a");
+    link.className = "btn btn--wpp btn--sm";
+    link.target = "_blank";
+    link.rel = "noopener";
+    link.href = whatsappLink;
+    link.setAttribute("data-track", "whatsapp_click");
+    link.textContent = "Abrir WhatsApp";
+    link.addEventListener("click", function () {
+      window.dataLayer.push({ event: "whatsapp_click", link_url: whatsappLink, link_location: "assistant" });
+    });
+    div.textContent = "Para fechar o atendimento, fale com nosso time: ";
+    div.appendChild(link);
     body.appendChild(div);
     body.scrollTop = body.scrollHeight;
   }
